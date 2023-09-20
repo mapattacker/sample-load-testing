@@ -1,0 +1,32 @@
+name: load testing
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  HOST: http://0.0.0.0:8080
+
+
+jobs:
+  cache-requirements:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install dependencies
+        run: pip3 install -r requirements.txt
+
+  loadtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: load test
+        run: |
+              json_output=$(locust -f test/test_load/simple_load_test.py \
+                  --headless \
+                  --host $HOST \
+                  --spawn-rate 1 \
+                  --users 5 \
+                  --run-time 60 \
+                  --html report.html \
+                  --json)
