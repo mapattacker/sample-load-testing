@@ -40,11 +40,13 @@ jobs:
               req_fail=$(awk -F',' 'END {print $4}' report.csv_stats.csv)
               fail_rate=$(( (req_fail + req_total) / 100 ))
               rps=$(awk -F',' 'END {print $10}' report.csv_stats.csv)
+              p90=$(awk -F',' 'END {print $16}' report.csv_stats.csv)
               p95=$(awk -F',' 'END {print $17}' report.csv_stats.csv)
               p99=$(awk -F',' 'END {print $19}' report.csv_stats.csv)
 
               echo Fail Rate: ${fail_rate}%
               echo RPS: $rps
+              echo 90 Percentile: ${p90}ms
               echo 95 Percentile: ${p95}ms
               echo 99 Percentile: ${p99}ms
       - name: store locust report
