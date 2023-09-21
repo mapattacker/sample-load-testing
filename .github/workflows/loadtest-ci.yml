@@ -48,8 +48,9 @@ jobs:
                   --users 5 \
                   --run-time 30 \
                   --stop-timeout 20
+                  --exit-code-on-error 0
                   --html report.html \
-                  --json) || true
+                  --json)
               echo "$json_output"
 
               # get failure rate
