@@ -1,4 +1,8 @@
-import requests
+"""You can specify the user class if you don't want to execute all at once, e.g.,
+
+locust -f test/test_load/custom_spawn_rate.py HeavyUser
+"""
+
 from locust import HttpUser, task, between
 
 
