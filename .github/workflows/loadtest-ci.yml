@@ -10,30 +10,13 @@ env:
 
 jobs:
 
-  cache-requirements:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-          cache: 'pip'
-      - name: install dependencies
-        run: pip3 install -r requirements.txt
-      - name: Cache Python dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-
   loadtest:
     runs-on: ubuntu-latest
-    needs: [cache-requirements]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10'
           cache: 'pip'
       - name: install dependencies
         run: pip3 install -r requirements.txt
@@ -47,16 +30,23 @@ jobs:
                   --host $HOST \
                   --spawn-rate 1 \
                   --users 5 \
-                  --run-time 30 \
-                  --stop-timeout 20 \
+                  --run-time 20 \
                   --exit-code-on-error 0 \
-                  --html report.html \
-                  --json)
-              echo "$json_output"
+                  --csv report.csv \
+                  --html report.html)
+              
+              # parse summary
+              req_total=$(awk -F',' 'END {print $3}' report.csv_stats.csv)
+              req_fail=$(awk -F',' 'END {print $4}' report.csv_stats.csv)
+              fail_rate=$(( (req_fail + req_total) / 100 ))
+              rps=$(awk -F',' 'END {print $10}' report.csv_stats.csv)
+              p95=$(awk -F',' 'END {print $17}' report.csv_stats.csv)
+              p99=$(awk -F',' 'END {print $19}' report.csv_stats.csv)
 
-              # get failure rate
-              # get RPS
-              # 90 / 95 percentile
+              echo Fail Rate: ${fail_rate}%
+              echo RPS: $rps
+              echo 95 Percentile: $p95
+              echo 99 Percentile: $p99
       - name: store locust report
         uses: actions/upload-artifact@v3
         with:
