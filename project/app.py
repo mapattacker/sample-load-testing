@@ -13,12 +13,12 @@ def predict():
 
 @app.post('/api2')
 def predict():
-    time.sleep(0.5)
+    time.sleep(0.25)
     return {"status": 200}
 
 @app.post('/api3')
 def predict():
-    time.sleep(0.5)
+    time.sleep(0.1)
     return {"status": 200}
 
 if __name__ == "__main__":
