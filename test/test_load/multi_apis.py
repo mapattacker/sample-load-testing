@@ -12,5 +12,5 @@ class HeavyUser(HttpUser):
     @task()
     def predict_endpoint1(self):
         response = self.client.post(f"{host}/api", json=payload1)
-        response = self.client.post(f"{host}/api", json=payload2)
-        response = self.client.post(f"{host}/api", json=payload3)
+        response = self.client.post(f"{host}/api2", json=payload2)
+        response = self.client.post(f"{host}/api3", json=payload3)

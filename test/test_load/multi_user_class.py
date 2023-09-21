@@ -23,5 +23,5 @@ class HeavyUser(HttpUser):
 class LightUser(HttpUser):
     wait_time = between(3, 5)
     @task()
-    def predict_endpoint1(self):
+    def predict_endpoint2(self):
         response = self.client.post(f"{host}/api3", json=payload1)
