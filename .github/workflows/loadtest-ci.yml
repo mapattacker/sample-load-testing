@@ -41,6 +41,7 @@ jobs:
         run: cd project; nohup python3 app.py > /dev/null 2>&1 &
       - name: load test
         run: |
+              sleep 2;
               json_output=$(locust -f test/test_load/single_api_single_payload.py \
                   --headless \
                   --host $HOST \
@@ -48,7 +49,7 @@ jobs:
                   --users 5 \
                   --run-time 30 \
                   --stop-timeout 20
-                  --exit-code-on-error 0
+                  --exit-code-on-error 0 \
                   --html report.html \
                   --json)
               echo "$json_output"
