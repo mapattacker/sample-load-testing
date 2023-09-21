@@ -41,12 +41,14 @@ jobs:
         run: |
               json_output=$(locust -f test/test_load/single_api_single_payload.py \
                   --headless \
-                  --host $HOST \
+                  --host http://0.0.0.0:8080 \
                   --spawn-rate 1 \
                   --users 5 \
                   --run-time 60 \
                   --html report.html \
                   --json)
+              echo "$json_output"
+
               # get failure rate
               # get RPS
               # 90 / 95 percentile
