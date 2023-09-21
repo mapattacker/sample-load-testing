@@ -48,7 +48,7 @@ jobs:
                   --spawn-rate 1 \
                   --users 5 \
                   --run-time 30 \
-                  --stop-timeout 20
+                  --stop-timeout 20 \
                   --exit-code-on-error 0 \
                   --html report.html \
                   --json)
