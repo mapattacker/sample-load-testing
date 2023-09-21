@@ -45,8 +45,8 @@ jobs:
 
               echo Fail Rate: ${fail_rate}%
               echo RPS: $rps
-              echo 95 Percentile: $((p95/1000))
-              echo 99 Percentile: $((p99/1000))
+              echo 95 Percentile: ${p95}ms
+              echo 99 Percentile: ${p99}ms
       - name: store locust report
         uses: actions/upload-artifact@v3
         with:
