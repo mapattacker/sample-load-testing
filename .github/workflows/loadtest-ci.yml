@@ -34,8 +34,8 @@ jobs:
                   --exit-code-on-error 0 \
                   --csv report.csv \
                   --html report.html)
-              
-              # parse summary
+      - name: load test summary
+        run: |   
               req_total=$(awk -F',' 'END {print $3}' report.csv_stats.csv)
               req_fail=$(awk -F',' 'END {print $4}' report.csv_stats.csv)
               fail_rate=$(( (req_fail + req_total) / 100 ))
@@ -45,8 +45,8 @@ jobs:
 
               echo Fail Rate: ${fail_rate}%
               echo RPS: $rps
-              echo 95 Percentile: $p95
-              echo 99 Percentile: $p99
+              echo 95 Percentile: $((p95/1000))
+              echo 99 Percentile: $((p99/1000))
       - name: store locust report
         uses: actions/upload-artifact@v3
         with:
