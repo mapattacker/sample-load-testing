@@ -21,10 +21,12 @@ jobs:
       - name: install dependencies
         run: pip3 install -r requirements.txt
       - name: run fastapi locally
-        run: cd project; nohup python3 app.py > /dev/null 2>&1 &
+        run: |
+              cd project
+              nohup python3 app.py > /dev/null 2>&1 &
+              sleep 2
       - name: load test
         run: |
-              sleep 2;
               json_output=$(locust -f test/test_load/single_api_single_payload.py \
                   --headless \
                   --host $HOST \
