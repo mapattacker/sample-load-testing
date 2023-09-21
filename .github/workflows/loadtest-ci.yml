@@ -41,8 +41,7 @@ jobs:
         run: cd project; nohup python3 app.py > /dev/null 2>&1 &
       - name: load test
         run: |
-              # json_output=$(
-              locust -f test/test_load/single_api_single_payload.py \
+              json_output=$(locust -f test/test_load/single_api_single_payload.py \
                   --headless \
                   --host $HOST \
                   --spawn-rate 1 \
@@ -50,9 +49,8 @@ jobs:
                   --run-time 30 \
                   --stop-timeout 20
                   --html report.html \
-                  --json
-              # )
-              # echo "$json_output"
+                  --json) || true
+              echo "$json_output"
 
               # get failure rate
               # get RPS
