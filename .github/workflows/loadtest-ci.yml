@@ -37,6 +37,8 @@ jobs:
           cache: 'pip'
       - name: install dependencies
         run: pip3 install -r requirements.txt
+      - name: run fastapi locally
+        run: cd project; nohup python3 app.py > /dev/null 2>&1 &
       - name: load test
         run: |
               # json_output=$(
@@ -45,7 +47,7 @@ jobs:
                   --host $HOST \
                   --spawn-rate 1 \
                   --users 5 \
-                  --run-time 60 \
+                  --run-time 30 \
                   --html report.html \
                   --json
               # )
