@@ -39,16 +39,23 @@ jobs:
         run: pip3 install -r requirements.txt
       - name: load test
         run: |
-              json_output=$(locust -f test/test_load/single_api_single_payload.py \
+              # json_output=$(
+              locust -f test/test_load/single_api_single_payload.py \
                   --headless \
-                  --host http://0.0.0.0:8080 \
+                  --host $HOST \
                   --spawn-rate 1 \
                   --users 5 \
                   --run-time 60 \
                   --html report.html \
-                  --json)
-              echo "$json_output"
+                  --json
+              # )
+              # echo "$json_output"
 
               # get failure rate
               # get RPS
               # 90 / 95 percentile
+      - name: store locust report
+        uses: actions/upload-artifact@v3
+        with:
+          name: locust-report
+          path: report.html
