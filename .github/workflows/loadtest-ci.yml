@@ -26,7 +26,7 @@ jobs:
               sleep 2
       - name: load test
         run: |
-              json_output=$(locust -f test/test_load/single_api_single_payload.py \
+              locust -f test/test_load/single_api_single_payload.py \
                   --headless \
                   --host $HOST \
                   --spawn-rate 1 \
@@ -34,7 +34,7 @@ jobs:
                   --run-time 20 \
                   --exit-code-on-error 0 \
                   --csv report.csv \
-                  --html report.html)
+                  --html report.html
       - name: load test summary
         run: |   
               req_total=$(awk -F',' 'END {print $3}' report.csv_stats.csv)
