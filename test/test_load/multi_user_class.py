@@ -11,8 +11,10 @@ payload1 = {"test": "something1"}
 payload2 = {"test": "something2"}
 payload3 = {"test": "something3"}
 
+# Ratios, HeavyUser 3/4, LightUser 1/4
 
 class HeavyUser(HttpUser):
+    weight = 3
     wait_time = between(3, 5)
     @task()
     def predict_endpoint1(self):
@@ -21,6 +23,7 @@ class HeavyUser(HttpUser):
         
 
 class LightUser(HttpUser):
+    weight = 1
     wait_time = between(3, 5)
     @task()
     def predict_endpoint2(self):
