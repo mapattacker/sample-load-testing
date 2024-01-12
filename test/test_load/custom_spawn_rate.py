@@ -27,9 +27,10 @@ class DefineYourClassName(HttpUser):
 
 
 class SharpStepShape(LoadTestShape):
-    increase_delay = 20  # 20s per increase in user
-    increase_size = 10  # number of extra users per increase
+    increase_delay = 10  # 20s per increase in user
+    increase_size = 2  # number of extra users per increase
     time_limit = 60 * 2 # runtime
+    max_users = 20 # total user limit
 
     def tick(self):
         run_time = self.get_run_time()
@@ -38,5 +39,8 @@ class SharpStepShape(LoadTestShape):
             return None
 
         step_number = int(run_time / self.increase_delay) + 1
-        user_limit = int(step_number * self.increase_size)
+        user_limit = min(step_number * self.increase_size, self.max_users)
+        
+        # no max user limits
+        # user_limit = int(step_number * self.increase_size)
         return user_limit, self.increase_size
